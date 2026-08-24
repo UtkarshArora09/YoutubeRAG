@@ -96,14 +96,3 @@ The final LLM takes the context snippets, translates any remaining foreign text 
    ```
    * Fast API backend runs at: `http://localhost:8000`
    * API Documentation (Swagger): `http://localhost:8000/docs`
-
----
-
-## 💼 Add to Your Resume
-
-Here are resume-ready bullet points to highlight this project on your CV:
-
-* **Architected and deployed a Retrieval-Augmented Generation (RAG) agent** that ingests YouTube videos/playlists and provides timestamp-cited answers, using **FastAPI**, **LangGraph**, and **PostgreSQL (`pgvector`)**.
-* **Designed a self-correcting retrieval pipeline** using **LangGraph** to construct a feedback loop that evaluates snippet relevance and dynamically rewrites query inputs, reducing hallucinations.
-* **Optimized API operating costs to $0** by implementing local multilingual embedding generation (`sentence-transformers`) and leveraging Groq's high-throughput free-tier LLM API.
-* **Engineered custom multilingual preprocessing** that translates and standardizes foreign-language caption tracks (e.g., Hindi/Hinglish) into English at ingestion, resulting in high-performance semantic retrieval matching.
