@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: raguser
+      POSTGRES_PASSWORD: ragpass
+      POSTGRES_DB: youtube_rag
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U raguser -d youtube_rag"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://raguser:ragpass@db:5432/youtube_rag
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      CHAT_MODEL: openai/gpt-oss-120b
+      EMBEDDING_MODEL: paraphrase-multilingual-MiniLM-L12-v2
+      EMBEDDING_DIM: 384
+    ports:
+      - "8000:8000"
+
+volumes:
+  pgdata:
